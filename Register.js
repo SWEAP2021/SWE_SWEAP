@@ -1,21 +1,19 @@
-import { React, useState } from "react";
-import "./Register.css";
+import React, { useState } from "react";
+import "../css/Register.css";
+import { NavLink } from "react-router-dom";
 
 function Register() {
-  function handleClick(e) {
-    window.location.href = "/login";
-  }
-
   const [inputs, setInputs] = useState({
     id: "",
     pw: "",
     pwc: "",
+    nickname: "",
     email: "",
     pwq: "",
     pwa: "",
   });
 
-  const { id, pw, pwc, email, pwq, pwa } = inputs;
+  const { id, pw, pwc, nickname, email, pwq, pwa } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -30,6 +28,7 @@ function Register() {
       id: "",
       pw: "",
       pwc: "",
+      nickname: "",
       email: "",
       pwq: "",
       pwa: "",
@@ -46,6 +45,7 @@ function Register() {
     console.log("Id: ", id);
     console.log("Pw: ", pw);
     console.log("PwC: ", pwc);
+    console.log("PwC: ", nickname);
     console.log("Email: ", email);
     console.log("PwQ: ", pwq);
     console.log("PwA: ", pwa);
@@ -78,9 +78,9 @@ function Register() {
             value={pw}
           />
         </div>
+        <br />
         {pw !== "" ? (
           <>
-            <br />
             <div className="Register">
               <div className="TEXT">
                 비밀번호 <br />
@@ -95,10 +95,22 @@ function Register() {
                 value={pwc}
               />
             </div>
+            <br />
           </>
         ) : (
           <></>
         )}
+
+        <div className="Register">
+          <div className="TEXT">닉네임</div>
+          <input
+            className="Input"
+            name="nickname"
+            placeholder=" 내용을 입력해주세요"
+            onChange={onChange}
+            value={nickname}
+          />
+        </div>
         <br />
         <div className="Register">
           <div className="TEXT">e-mail</div>
@@ -150,16 +162,13 @@ function Register() {
           {id === "" &&
           pw === "" &&
           pwc === "" &&
+          nickname === "" &&
           email === "" &&
           pwq === "" &&
           pwa === "" ? (
-            <button
-              className="CancelButton"
-              onClick={handleClick}
-              type="button"
-            >
+            <NavLink className="toLogin" to="../login">
               취소
-            </button>
+            </NavLink>
           ) : (
             <button className="CancelButton" onClick={onReset}>
               초기화
@@ -168,6 +177,7 @@ function Register() {
           {id === "" ||
           pw === "" ||
           pwc === "" ||
+          nickname === "" ||
           email === "" ||
           pwa === "" ? (
             <button
