@@ -6,67 +6,104 @@ import { HiSearch } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { Component } from "react/cjs/react.production.min";
 
-const article = [
-  { title: "1", content: "11111", like: "0" },
-  { title: "2", content: "22222", like: "2" },
-  { title: "3", content: "33333", like: "4" },
-  { title: "4", content: "44444", like: "0" },
-  { title: "5", content: "55555", like: "1" },
-];
+let start = true;
 
-const showArticle = article.map((atc) => {
-  return (
-    <div className="article">
-      <div className="title">{atc.title}</div>
-      <div className="content">
-        {atc.content}{" "}
-        <div style={{ fontSize: "15px" }}>
-          <AiFillLike size="15" />
-          {atc.like}
-        </div>
-      </div>
-    </div>
-  );
-});
+function createData(title, content, like, time) {
+  return { title, content, like, time };
+}
 
 class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
       article: [
-        { title: "1", content: "11111", like: "0" },
-        { title: "2", content: "22222", like: "2" },
-        { title: "3", content: "33333", like: "4" },
-        { title: "4", content: "44444", like: "0" },
-        { title: "5", content: "55555", like: "1" },
+        { title: "", content: "", like: 0, time: "" },
+        { title: "", content: "", like: 0, time: "" },
+        { title: "", content: "", like: 0, time: "" },
+        { title: "", content: "", like: 0, time: "" },
+        { title: "", content: "", like: 0, time: "" },
       ],
     };
   }
 
-  getArticle() {
+  updateLike = (title) => {
+    console.log("buttonclick");
     const post = {
       query:
-        "SELECT (Title, Content, LikeCnt) FROM BOARD ORDER BY DayTime DESC;",
+        "UPDATE BOARD SET LikeCnt = LikeCnt + 1 WHERE Title = '" + title + "';",
     };
-    fetch("http://18.118.194.10:8080/SQL", {
+
+    console.log(post.query);
+
+    fetch("http://18.118.194.10:8080/SQL2", {
+      method: "post",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(post),
+    });
+    window.location.href = "/board";
+  };
+
+  showArticle = () =>
+    this.state.article.map((atc) => {
+      return (
+        <div className="article">
+          <div className="title">{atc.title}</div>
+          <div className="content">
+            {atc.content}{" "}
+            <div style={{ fontSize: "20px" }}>
+              <button
+                className="likeButton"
+                onClick={() => this.updateLike(atc.title)}
+              >
+                <AiFillLike size="20" />
+              </button>
+              {atc.like}
+            </div>
+          </div>
+        </div>
+      );
+    });
+
+  getArticle = () => {
+    const post = {
+      query: "SELECT * FROM BOARD ORDER BY DayTime DESC;",
+    };
+
+    console.log(post.query);
+
+    fetch("http://18.118.194.10:8080/SQL2", {
+      // fetch("http://localhost:4000/SQL2", {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
     })
       .then((res) => res.json())
       .then((json) => {
-        this.setState({
-          title: json.Title,
-          content: json.Content,
-          like: json.LikeCnt,
-        });
+        console.log("asdfasfsadfas");
+        console.log(json);
+        for (let i = 0; i < 5; ++i) this.state.article.shift();
+        for (let i = 0; i < json.length; ++i) {
+          this.setState({
+            article: this.state.article.concat(
+              createData(
+                json[i].Title,
+                json[i].Content,
+                json[i].LikeCnt,
+                json[i].DayTime
+              )
+            ),
+          });
+        }
       });
-  }
+  };
 
   render() {
+    if (start) {
+      this.getArticle();
+      start = false;
+    }
     return (
       <>
-        <button onClick={this.getArticle}>getarticle</button>
         <div className="Board">
           <NavLink to="/">
             <IoIosArrowBack size="40" />
@@ -74,7 +111,7 @@ class Board extends Component {
           게시판
           <HiSearch size="25" style={{ marginTop: "10px" }} />
         </div>
-        {showArticle}
+        {this.showArticle()}
         <div style={{ textAlign: "center" }}>
           <NavLink className="WriteButton" to="/write">
             글 쓰기

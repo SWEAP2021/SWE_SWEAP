@@ -4,6 +4,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { Component } from "react/cjs/react.production.min";
 
+let start = true;
+
+function createData(id, profit) {
+  return { id, profit };
+}
+
 class Ranking extends Component {
   constructor(props) {
     super(props);
@@ -42,27 +48,41 @@ class Ranking extends Component {
   }
 
   getRanking = () => {
+    console.log(this.state);
     const post = {
+      // InitialProfit --> ContestProfit으로 수정해줘야됨
       query:
-        "SELECT UserID, FinalProfit FROM PARTICIPATE ODER BY FinalProfit DESC LIMIT 7",
+        "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY InitialProfit DESC LIMIT 7;",
     };
-    fetch("http://18.118.194.10:8080/SQL", {
+    // fetch("http://18.118.194.10:8080/SQL2", {
+    fetch("http://localhost:4000/SQL2", {
+      method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         for (let i = 0; i < json.length; ++i) {
+          this.state.list.shift();
           this.setState({
-            id: json[i].UserID,
-            profit: json[i].ContestProfit,
+            list: this.state.list.concat(
+              createData(json[i].UserID, json[i].InitialProfit)
+            ),
           });
         }
+
+        console.log("sdfsdf");
+        console.log(this.state.list);
       });
   };
 
   render() {
-    this.getRanking();
+    if (start) {
+      this.getRanking();
+      start = false;
+    }
+
     return (
       <>
         <NavLink to="/">
