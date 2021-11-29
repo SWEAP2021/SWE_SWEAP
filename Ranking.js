@@ -4,8 +4,6 @@ import { IoIosArrowBack } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { Component } from "react/cjs/react.production.min";
 
-let start = true;
-
 function createData(id, profit) {
   return { id, profit };
 }
@@ -45,17 +43,20 @@ class Ranking extends Component {
         },
       ],
     };
+
+    this.getRanking();
   }
 
   getRanking = () => {
     console.log(this.state);
     const post = {
-      // InitialProfit --> ContestProfit으로 수정해줘야됨
+      // InitialProfit --> ContestProfit으로 수정해야됨
       query:
         "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY InitialProfit DESC LIMIT 7;",
+      // "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY ContestProfit DESC LIMIT 7;",
     };
-    // fetch("http://18.118.194.10:8080/SQL2", {
     fetch("http://localhost:4000/SQL2", {
+      // fetch("http://18.118.194.10:8080/SQL2", {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
@@ -71,30 +72,25 @@ class Ranking extends Component {
             ),
           });
         }
-
-        console.log("sdfsdf");
-        console.log(this.state.list);
       });
   };
 
   render() {
-    if (start) {
-      this.getRanking();
-      start = false;
-    }
-
     return (
       <>
-        <NavLink to="/">
-          <IoIosArrowBack size="40" />
-        </NavLink>
+        <div style={{ margin: "10px" }}>
+          <NavLink to="/contest" className="icon">
+            <IoIosArrowBack size="40" />
+          </NavLink>
+        </div>
         <div className="ranking1">제 1회 모의투자 경진대회 결과</div>
         <div className="ranking">
           <br />
           <br />
           <div className="top1">
             <div className="top3">
-              1<div style={{ color: "white" }}>{this.state.list[0].id}</div>
+              <t style={{ color: "rgb(218, 187, 104)" }}> 1</t>
+              <div style={{ color: "white" }}>{this.state.list[0].id}</div>
               <div
                 style={{
                   color: this.state.list[0].profit > 0 ? "red" : "blue",
@@ -107,7 +103,8 @@ class Ranking extends Component {
           <br />
           <div className="tops">
             <div className="top3">
-              2<div style={{ color: "white" }}>{this.state.list[1].id}</div>
+              <t style={{ color: "rgb(218, 187, 104)" }}> 2</t>
+              <div style={{ color: "white" }}>{this.state.list[1].id}</div>
               <div
                 style={{
                   color: this.state.list[1].profit > 0 ? "red" : "blue",
@@ -118,7 +115,8 @@ class Ranking extends Component {
             </div>
             <br />
             <div className="top3">
-              3<div style={{ color: "white" }}>{this.state.list[2].id}</div>
+              <t style={{ color: "rgb(218, 187, 104)" }}> 3</t>
+              <div style={{ color: "white" }}>{this.state.list[2].id}</div>
               <div
                 style={{
                   color: this.state.list[2].profit > 0 ? "red" : "blue",
@@ -131,7 +129,7 @@ class Ranking extends Component {
           <br />
           <br />
           <div className="ranking3">
-            4<div>{this.state.list[3].id}</div>
+            4.<div>{this.state.list[3].id}</div>
             <div
               style={{ color: this.state.list[3].profit > 0 ? "red" : "blue" }}
             >
@@ -140,7 +138,7 @@ class Ranking extends Component {
           </div>
           <br />
           <div className="ranking3">
-            5<div>{this.state.list[4].id}</div>
+            5.<div>{this.state.list[4].id}</div>
             <div
               style={{ color: this.state.list[4].profit > 0 ? "red" : "blue" }}
             >
@@ -149,7 +147,7 @@ class Ranking extends Component {
           </div>
           <br />
           <div className="ranking3">
-            6<div>{this.state.list[5].id}</div>
+            6.<div>{this.state.list[5].id}</div>
             <div
               style={{ color: this.state.list[5].profit > 0 ? "red" : "blue" }}
             >
@@ -158,7 +156,7 @@ class Ranking extends Component {
           </div>
           <br />
           <div className="ranking3">
-            7<div>{this.state.list[6].id}</div>
+            7.<div>{this.state.list[6].id}</div>
             <div
               style={{ color: this.state.list[6].profit > 0 ? "red" : "blue" }}
             >

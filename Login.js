@@ -30,6 +30,7 @@ function Login() {
     console.log(post.query);
 
     fetch("http://localhost:4000/SQL1", {
+      // fetch("http://18.118.194.10:8080/SQL1", {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
@@ -38,7 +39,7 @@ function Login() {
       .then((json) => {
         if (json.SUCCESS) {
           window.sessionStorage.setItem("userID", id);
-          window.location.href = "/ranking"; // 로그인 성공시 페이지 이동
+          window.location.href = "/Portfolio"; // 로그인 성공시 페이지 이동
         } else alert("ID/PW를 다시 확인해주세요.");
       });
   }
@@ -47,15 +48,17 @@ function Login() {
     window.location.href = "/register";
   }
 
-  console.log(inputs);
-
   return (
     <>
       <div className="Login">
         <br />
         SWEAP
         <br />
-        <RiMoneyDollarCircleLine size="150" />
+      </div>
+      <br />
+      <div className="dollarAlign">
+        {" "}
+        <RiMoneyDollarCircleLine className="shine" size="150" />
       </div>
       <br />
       <div className="Login2">
