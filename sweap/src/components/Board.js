@@ -64,7 +64,9 @@ class Board extends Component {
     };
 
     console.log(post.query);
-    fetch("http://18.118.194.10:8080/SQL2", {
+
+    fetch("http://localhost:4000/SQL2", {
+      // fetch("http://18.118.194.10:8080/SQL2", {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
@@ -99,7 +101,9 @@ class Board extends Component {
     };
 
     console.log(post.query);
-    fetch("http://18.118.194.10:8080/SQL2", {
+
+    fetch("http://localhost:4000/SQL2", {
+      // fetch("http://18.118.194.10:8080/SQL2", {
       method: "post",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(post),
@@ -175,7 +179,7 @@ class Board extends Component {
         {this.state.modalOn && this.searchArticle()}
         {!this.state.modalOn && this.showArticle()}
         <div style={{ textAlign: "center" }}>
-          <NavLink className="WriteButton" to="/write">
+          <NavLink className="WriteButtonn" to="/write">
             글 쓰기
           </NavLink>
         </div>
