@@ -1,43 +1,74 @@
 .searchForm {
-    height: 30px;
-    width: 30vw;
-    font-size: 2rem;
-    padding: 2rem;
-    text-align: center;
-    font-weight: 100;
-    background: #1abc9c;;
-    color: white;
-    border: none;
+  margin: 10px;
+  font-size: 3vh;
+  padding: 1rem;
+
+  text-align: center;
+  background: rgb(26, 188, 156);
+  color: white;
+  border: none;
+  width: 40vw;
+
+  border-radius: 5px;
 }
-.searchForm-wrapper {
-    padding: 1rem;
-    border-bottom: 1px solid #1abc9c;
+
+.searchForm:hover {
+  filter: brightness(90%);
+  cursor: pointer;
 }
+/* .searchForm-wrapper {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(26, 188, 156);
+} */
 .result-wrapper {
-    padding: 1rem;
-    border-bottom: 1px solid #1abc9c;
+  padding: 1rem;
+  border-bottom: 1px solid rgb(26, 188, 156);
 }
 .stockItem {
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.15s;
-    user-select: none;
-    color: black;
+  margin: 10px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  color: black;
+
+  font-size: 2.5vh;
+  font-weight: bold;
+  background-color: rgb(221, 221, 221);
+
+  display: flex;
+  justify-content: space-between;
 }
 .stockItem:hover {
-    background: #1abc9c;
-    color: white;
+  background: rgb(184, 184, 184);
+  color: white;
 }
-.stockItem + .stockItem { 
-    border-top: 1px solit #f1f3f5;
+.stockItem + .stockItem {
+  border-top: 1px solit #f1f3f5;
 }
 
 .stockItem-text {
-    flex: 1;
-    word-break: break-all;
+  flex: 1;
+  word-break: break-all;
 }
 
-.centered { display: table; margin-left: auto; margin-right: auto; }
-.rightd { float: right }
+.centered {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rightd {
+  float: right;
+}
+
+.search-wrapper {
+  text-align: center;
+  overflow: scroll;
+  height: 100vh;
+}
+
+.search-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
