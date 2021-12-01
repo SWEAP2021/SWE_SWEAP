@@ -52,8 +52,8 @@ class Ranking extends Component {
     const post = {
       // InitialProfit --> ContestProfit으로 수정해야됨
       query:
-        "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY InitialProfit DESC LIMIT 7;",
-      // "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY ContestProfit DESC LIMIT 7;",
+      //  "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY InitialProfit DESC LIMIT 7;",
+       "SELECT * FROM PARTICIPATE WHERE ContestNum = 1 ORDER BY ContestProfit DESC LIMIT 7;",
     };
     fetch("http://18.118.194.10:8080/SQL2", {
       method: "post",
@@ -67,7 +67,7 @@ class Ranking extends Component {
           this.state.list.shift();
           this.setState({
             list: this.state.list.concat(
-              createData(json[i].UserID, json[i].InitialProfit)
+              createData(json[i].UserID, json[i].ContestProfit)
             ),
           });
         }
