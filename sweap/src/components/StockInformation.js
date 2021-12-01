@@ -5,6 +5,7 @@ import "../css/StockInformation.css";
 import shortStockInfos from "../dataframe.json";
 import { IoIosArrowBack } from "react-icons/io";
 import { NavLink } from "react-router-dom";
+import '../css/Button.css';
 import Plot from "react-plotly.js"
 
 const current = decodeURI(window.location.href);
@@ -217,6 +218,20 @@ class StockInformation extends Component {
                 <div style={{ fontSize: "3vh" }}>{this.state.lowPrice}원</div>
               </div>
               <hr style={{ border: "1px solid rgb(231, 179, 66)" }} />
+            </div>
+<div className="button centered">
+            <button
+              className="buyButton"
+onClick={() => {
+                window.location.href = "/buy?stockName=" + stk.stockName+"&s=p";
+              }} >매수
+            </button>
+            <button
+              className="sellButton"
+              onClick={() => {
+                window.location.href = "/sell?stockName=" + stk.stockName+"&s=p";
+              }}> 매도
+            </button>
             </div>
           </>
         )}
