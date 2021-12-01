@@ -5,8 +5,8 @@ import "../css/StockInformation.css";
 import shortStockInfos from "../dataframe.json";
 import { IoIosArrowBack } from "react-icons/io";
 import { NavLink } from "react-router-dom";
-import '../css/Button.css';
-import Plot from "react-plotly.js"
+import Plot from "react-plotly.js";
+import "../css/Button.css";
 
 const current = decodeURI(window.location.href);
 const search = current.split("?")[1];
@@ -26,29 +26,35 @@ class StockInformation extends Component {
       btn2: "",
       btn3: "",
       btn4: "",
-      graphs: []
+      graphs: [],
     };
-    this.updateInfo();
-    this.getChart();
+    // this.updateInfo();
+    // this.getChart();
   }
   getChart() {
     console.log("dddd");
-    fetch("http://18.118.194.10:8080/getStockChart?stockName=" + keyword + "&option=" + this.state.opt, {
-      // /posture를 post를 통해 서버와 연동
-      method: "get",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      "http://18.118.194.10:8080/getStockChart?stockName=" +
+        keyword +
+        "&option=" +
+        this.state.opt,
+      {
+        // /posture를 post를 통해 서버와 연동
+        method: "get",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
-      .then((json) =>  {
-          const datas = json.text.split(`,"layout"`)
-          const thedata = datas[0].substring(8)
-          const myArr = JSON.parse(thedata)
-          this.setState({
-            graphs: myArr
-          });
-          console.log(this.state.graphs)
+      .then((json) => {
+        const datas = json.text.split(`,"layout"`);
+        const thedata = datas[0].substring(8);
+        const myArr = JSON.parse(thedata);
+        this.setState({
+          graphs: myArr,
+        });
+        console.log(this.state.graphs);
       });
   }
 
@@ -94,7 +100,7 @@ class StockInformation extends Component {
             btn2: "",
             btn3: "",
             btn4: "",
-            opt: 1
+            opt: 1,
           });
           this.getChart();
           break;
@@ -104,7 +110,7 @@ class StockInformation extends Component {
             btn1: "",
             btn3: "",
             btn4: "",
-            opt: 2
+            opt: 2,
           });
           this.getChart();
           break;
@@ -114,7 +120,7 @@ class StockInformation extends Component {
             btn2: "",
             btn1: "",
             btn4: "",
-            opt: 3
+            opt: 3,
           });
           this.getChart();
           break;
@@ -124,7 +130,7 @@ class StockInformation extends Component {
             btn2: "",
             btn3: "",
             btn1: "",
-            opt: 4
+            opt: 4,
           });
           this.getChart();
           break;
@@ -165,9 +171,19 @@ class StockInformation extends Component {
           <></>
         ) : (
           <>
-            <div className="chart-wrapper">
-            <Plot data = {this.state.graphs} layout={{ margin: {l:50, r:10, b:20, t:20, pad: 1}}} />
-            
+            <div
+              className="chart-wrapper"
+              style={{
+                height: "50vh",
+                border: "none",
+                margin: "0",
+              }}
+            >
+              <Plot
+                data={this.state.graphs}
+                layout={{ margin: { l: 50, r: 10, b: 20, t: 20, pad: 1 } }}
+                style={{ width: "100%", height: "100%" }}
+              />
             </div>
             <div className="buttons-wrapper">
               <div
